@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class AuthController {
     @Autowired
@@ -20,8 +22,9 @@ public class AuthController {
     @Value("${github.redirect.url}")
     private String redirectUrl;
     @GetMapping("/callback") 
-    public String callback(@RequestParam(name = "code")String code,@RequestParam(name = "state")String state){
-        System.out.println(code+"    "+state);
+    public String callback(@RequestParam(name = "code")String code,
+                           @RequestParam(name = "state")String state,
+                           HttpServletRequest request){
         AccessToken accessToken = new AccessToken();
         accessToken.setClient_id(clientId);
         accessToken.setClient_secret(clientSecret);
@@ -30,7 +33,13 @@ public class AuthController {
         accessToken.setState(state);
         String accessTokenStr = githubProvier.getAccessToken(accessToken);
         GithubUser githubUser = githubProvier.getUser(accessTokenStr);
-        System.out.println(githubUser);
-        return "index";
+        if (githubUser!=null){
+            //登录成功
+            request.getSession().setAttribute("githubUser",githubUser);
+            //redirect:跳转到对应的路径（不会解析视图）
+            return "redirect:/";
+        }else {
+            return "redirect:/";
+        }
     }
 }
