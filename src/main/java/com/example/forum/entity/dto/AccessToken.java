@@ -1,4 +1,4 @@
-package com.example.forum.entity;
+package com.example.forum.entity.dto;
 
 public class AccessToken {
     private String client_id;

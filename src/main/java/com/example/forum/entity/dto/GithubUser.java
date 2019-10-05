@@ -1,4 +1,4 @@
-package com.example.forum.entity;
+package com.example.forum.entity.dto;
 
 public class GithubUser {
     private String name;

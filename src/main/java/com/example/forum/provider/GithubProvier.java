@@ -1,8 +1,8 @@
 package com.example.forum.provider;
 
 import com.alibaba.fastjson.JSON;
-import com.example.forum.entity.AccessToken;
-import com.example.forum.entity.GithubUser;
+import com.example.forum.entity.dto.AccessToken;
+import com.example.forum.entity.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
